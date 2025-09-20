@@ -1,0 +1,56 @@
+<configuration>
+	<!-- 	This is for the console -->
+    <appender name = "myConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">        
+        <encoder>
+			<pattern>
+<!--                 %cyan(%d{HH:mm:ss.SSS}) %highlight(%-5level) [%green(%thread)] %yellow(%logger{20}) - %marker{ -->
+<!--         DB   :cyan,  -->
+<!--         HTTP :magenta -->
+<!--    		 } %msg%n -->
+
+   %cyan(%d{HH:mm:ss.SSS}) 
+                %highlight(%-5level) 
+                [%green(%thread)] 
+                %yellow(%logger{20}) - 
+                %msg{
+                    %-10level=INFO  :green,
+                    %-10level=WARN  :yellow,
+                    %-10level=ERROR :red,
+                    "SUCCESS"       :green,
+                    "FAIL"         :red,
+                    "DEBUG"         :blue
+                }%n
+            </pattern>
+            <charset>UTF-8</charset>
+            
+        </encoder>
+    </appender>
+	
+	
+	<!-- 	This is for the file -->
+    <appender name = "myFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!--        This file/fileName should be before the rollingPolicy probably to give the name that fileNamePattern can refer to -->
+        <file>
+            logs/clientRecords.log
+        </file>
+		<!--         Generates new log files with given criteria below -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>logs/clientRecords-%d{yy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>10MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>
+                %d{yy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg %n
+            </pattern>
+        </encoder>
+    </appender>
+
+
+	<!-- 	To mention above which severity of the log should be displayed EG:[trace,debug, info, warn, error] -->
+    <root level="INFO">
+        <appender-ref ref="myConsoleAppender" />
+        <appender-ref ref="myFileAppender" />
+    </root>
+
+</configuration>
