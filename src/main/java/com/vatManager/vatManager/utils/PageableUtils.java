@@ -5,12 +5,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class PageableUtils {
 
 	
 	
 	public static Pageable createPageable(int page, int size, String sortDirection, String sortBy) {
 		
+		log.info("{} : This is the sortDirection received in the pageableUtils method.", sortDirection);
 		Sort.Direction defaultSortDirection = Direction.ASC;
 		Sort.Direction requestedSortDirection;
 
@@ -21,12 +25,15 @@ public class PageableUtils {
 		}
 		
 		
+		/**
+		 * Checking if the sortDirection value is present in the URL.
+		 * */
 		if(sortDirection!=null && !sortDirection.isEmpty() ) {
-			if(sortBy.equalsIgnoreCase("ascending") || sortBy.equalsIgnoreCase("asc") || sortBy.equalsIgnoreCase("a")) {
+			if(sortDirection.equalsIgnoreCase("ascending") || sortDirection.equalsIgnoreCase("asc") || sortDirection.equalsIgnoreCase("a")) {
 				requestedSortDirection = Direction.ASC;
 				return PageRequest.of(page, size, requestedSortDirection, sortBy);
 			}
-			else if(sortBy.equalsIgnoreCase("descending") || sortBy.equalsIgnoreCase("desc") || sortBy.equalsIgnoreCase("d")) {
+			else if(sortDirection.equalsIgnoreCase("descending") || sortDirection.equalsIgnoreCase("desc") || sortDirection.equalsIgnoreCase("d")) {
 				requestedSortDirection = Direction.DESC;
 				return PageRequest.of(page, size, requestedSortDirection, sortBy);
 			}

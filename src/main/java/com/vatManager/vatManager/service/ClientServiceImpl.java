@@ -49,9 +49,9 @@ public class ClientServiceImpl implements ClientService{
 	@Override
 	public void deleteClientById(int id) {
 		log.info("Initiating delete Of Client of ID : {}", id);
-		this.clientRepo.findById(id)
+		Client client = this.clientRepo.findById(id)
 					.orElseThrow(()-> new ClientNotFoundException("Client with id " + id + " not found") );
-		
+		clientRepo.delete(client);
 	}
 	
 	@Override
@@ -97,6 +97,15 @@ public class ClientServiceImpl implements ClientService{
 	public void insertClient(ClientRequestDto request) {
 		Client client = clientMapper.toClient(request);
 		clientRepo.save(client);
+	}
+
+	
+	
+	@Override
+	public Page<ClientResponseDto> searchClient(String searchQuery, Pageable pageable) {
+		Page<Client> clientList = clientRepo.searchByQuery(searchQuery, pageable);
+		Page<ClientResponseDto> clientResponseList = clientList.map(clientMapper::toClientResponseDto);
+		return clientResponseList;
 	}
 	
 	

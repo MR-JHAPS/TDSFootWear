@@ -100,24 +100,40 @@ public class ClientController {
 	
 	// Theoretically this should work.
 	@GetMapping("/download/clients")
-	public ResponseEntity<ApiResponseModel<byte[]>> exportClientsToExcel() {
+	public ResponseEntity<byte[]> exportClientsToExcel() {
 		List<ClientResponseDto> clientList = clientService.getAllClients();
+		System.out.println("Downloading Excel File of Clients");
 		try {
 			byte[] byteValue = ExcelUtils.createExcelBytes(clientList);
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
 			headers.setContentDispositionFormData("attachment", "tdsClients.xlsx");
-			ApiResponseModel<byte[]> customResponse = new ApiResponseModel<byte[]>("Excel Data for Client sent successfully.", byteValue);
-			return ResponseEntity.status(HttpStatus.OK).headers(headers).body(customResponse);
+//			ApiResponseModel<byte[]> customResponse = new ApiResponseModel<byte[]>("Excel Data for Client sent successfully.", byteValue);
+			System.out.println("success with excel file");
+			return ResponseEntity.status(HttpStatus.OK).headers(headers).body(byteValue);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			ApiResponseModel<byte[]> errorResponse = new ApiResponseModel<>("Error sending the Excel download file.");
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 		}
 		
 	}
 	
+	
+	@GetMapping("/search")
+	public ResponseEntity<ApiResponseModel<PagedModel<EntityModel<ClientResponseDto>>>> searchClientsByQuery(
+			@RequestParam String query,
+			@RequestParam (defaultValue = "0") int page,
+			@RequestParam (defaultValue = "10") int size,
+			@RequestParam (required = false) String direction,
+			@RequestParam (required = false) String sortBy
+			){
+		System.out.println("Search Controller called");
+		Pageable pageable = PageableUtils.createPageable(page, size, direction, sortBy);
+		Page<ClientResponseDto> clientResponseList = clientService.searchClient(query, pageable);
+		PagedModel<EntityModel<ClientResponseDto>> pagedModel = pagedResourceAssembler.toPagedModel(clientResponseList);
+		return responseBuilder.buildApiResponse("Client Search Successfully obtained", pagedModel, HttpStatus.OK);
+	}
 	
 	
 }

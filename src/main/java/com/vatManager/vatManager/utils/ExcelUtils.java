@@ -2,8 +2,13 @@ package com.vatManager.vatManager.utils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -22,13 +27,13 @@ public class ExcelUtils {
 		//Header Row for the SpreadSheet/Excel.
 		Row header = sheet.createRow(0);
 		header.createCell(0).setCellValue("ID");
-		header.createCell(0).setCellValue("FOOM-NAME");
-		header.createCell(0).setCellValue("DATE");
-		header.createCell(0).setCellValue("BILL-NUMBER");
-		header.createCell(0).setCellValue("PAN-NUMBER");
-		header.createCell(0).setCellValue("AMOUNT");
-		header.createCell(0).setCellValue("VAT-TAX");
-		header.createCell(0).setCellValue("TOTAL");
+		header.createCell(1).setCellValue("FOOM-NAME");
+		header.createCell(2).setCellValue("DATE");
+		header.createCell(3).setCellValue("BILL-NUMBER");
+		header.createCell(4).setCellValue("PAN-NUMBER");
+		header.createCell(5).setCellValue("AMOUNT");
+		header.createCell(6).setCellValue("VAT-TAX");
+		header.createCell(7).setCellValue("TOTAL");
 	
 		//Data row for the spreadsheet/excel.
 		
@@ -38,13 +43,22 @@ public class ExcelUtils {
 			
 			Row row = sheet.createRow(rowNumber++);
 			row.createCell(0).setCellValue(client.getId());
-			row.createCell(0).setCellValue(client.getFoomName());
-			row.createCell(0).setCellValue(client.getDate());
-			row.createCell(0).setCellValue(client.getBillNumber());
-			row.createCell(0).setCellValue(client.getPanNumber());
-			row.createCell(0).setCellValue(client.getAmount());
-			row.createCell(0).setCellValue(client.getVatTax());
-			row.createCell(0).setCellValue(client.getTotal());
+			row.createCell(1).setCellValue(client.getFoomName());
+			
+			Cell dateCell = row.createCell(2);
+			LocalDate localDate = client.getDate();
+			Date date = Date.valueOf(localDate);
+			dateCell.setCellValue(date);
+			CellStyle dateStyle = workbook.createCellStyle();
+			CreationHelper createHelper = workbook.getCreationHelper();
+			dateStyle.setDataFormat(createHelper.createDataFormat().getFormat("yyyy-MM-dd"));
+			dateCell.setCellStyle(dateStyle);
+			
+			row.createCell(3).setCellValue(client.getBillNumber());
+			row.createCell(4).setCellValue(client.getPanNumber());
+			row.createCell(5).setCellValue(client.getAmount());
+			row.createCell(6).setCellValue(client.getVatTax());
+			row.createCell(7).setCellValue(client.getTotal());
 			
 		}// ends for
 		
