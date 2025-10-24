@@ -34,17 +34,54 @@ public class VatManagerApplication {
 	//Automatically opens the angular front end stored in resources/static after the server is fully loaded.
 	@EventListener(ApplicationReadyEvent.class)
     public void openBrowserAfterStartup() {
-        openBrowser("http://localhost:8080");
+		new Thread(() ->{
+			try {
+				Thread.sleep(4000);
+		        openBrowser("http://localhost:8080");
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}).start();
     }
 	
-	 private static void openBrowser(String url) {
-	        try {
-	            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-	                Desktop.getDesktop().browse(new URI(url));
-	            }
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
-	    }
+//	 private static void openBrowser(String url) {
+//	        try {
+//	            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+//	                Desktop.getDesktop().browse(new URI(url));
+//	            }
+//	        } catch (Exception e) {
+//	            e.printStackTrace();
+//	        }
+//	    }
 
+	private static void openBrowser(String url) {
+	    String os = System.getProperty("os.name").toLowerCase();
+	    Runtime rt = Runtime.getRuntime();
+
+	    try {
+	        if (os.contains("win")) {
+	            rt.exec("rundll32 url.dll,FileProtocolHandler " + url);
+	        } else if (os.contains("mac")) {
+	            rt.exec("open " + url);
+	        } else if (os.contains("nix") || os.contains("nux")) {
+	            // Linux variants
+	            String[] browsers = {"xdg-open", "google-chrome", "firefox"};
+	            String browser = null;
+	            for (String b : browsers) {
+	                if (Runtime.getRuntime().exec(new String[]{"which", b}).getInputStream().read() != -1) {
+	                    browser = b;
+	                    break;
+	                }
+	            }
+	            if (browser != null) {
+	                rt.exec(new String[]{browser, url});
+	            }
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+
+	
+	
 }
