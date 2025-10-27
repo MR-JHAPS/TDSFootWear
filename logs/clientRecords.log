@@ -1,0 +1,68 @@
+25-10-27 21:34:06.032 [main] INFO  c.v.v.service.ClientServiceImpl - Getting all the Clients from the Database. 
+25-10-27 21:34:06.196 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.vatManager.vatManager.VatManagerApplicationTests]: VatManagerApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration. 
+25-10-27 21:34:06.335 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.vatManager.vatManager.VatManagerApplication for test class com.vatManager.vatManager.VatManagerApplicationTests 
+25-10-27 21:34:06.501 [main] INFO  o.s.b.d.r.RestartApplicationListener - Restart disabled due to context in which it is running 
+25-10-27 21:34:06.745 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.3.Final 
+25-10-27 21:34:06.797 [main] INFO  c.v.v.VatManagerApplicationTests - Starting VatManagerApplicationTests using Java 23.0.2 with PID 5364 (started by neraz in D:\SpringBoot  Projects\vatManager) 
+25-10-27 21:34:06.798 [main] INFO  c.v.v.VatManagerApplicationTests - No active profile set, falling back to 1 default profile: "default" 
+25-10-27 21:34:07.600 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode. 
+25-10-27 21:34:07.672 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 58 ms. Found 1 JPA repository interface. 
+25-10-27 21:34:08.245 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default] 
+25-10-27 21:34:08.331 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.26.Final 
+25-10-27 21:34:08.376 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled 
+25-10-27 21:34:08.511 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer 
+25-10-27 21:34:08.673 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'org.sqlite.SQLiteDataSource@1eb6037d']
+	Database driver: undefined/unknown
+	Database version: 3.50.3
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown 
+25-10-27 21:34:09.318 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration) 
+25-10-27 21:34:09.355 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default' 
+25-10-27 21:34:09.647 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used. 
+25-10-27 21:34:09.828 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning 
+25-10-27 21:34:09.910 [main] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html] 
+25-10-27 21:34:10.294 [main] INFO  c.v.v.VatManagerApplicationTests - Started VatManagerApplicationTests in 3.803 seconds (process running for 6.215) 
+25-10-27 21:34:10.350 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default' 
+25-10-27 21:54:54.918 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.3.Final 
+25-10-27 21:54:54.983 [main] INFO  c.v.vatManager.VatManagerApplication - Starting VatManagerApplication v0.0.1-SNAPSHOT using Java 21.0.5 with PID 24164 (C:\Program Files\tdsInstaller\app\TDS-ClientManager.jar started by neraz in D:\SpringBoot  Projects\vatManager) 
+25-10-27 21:54:54.984 [main] INFO  c.v.vatManager.VatManagerApplication - No active profile set, falling back to 1 default profile: "default" 
+25-10-27 21:54:55.934 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode. 
+25-10-27 21:54:56.000 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 55 ms. Found 1 JPA repository interface. 
+25-10-27 21:54:56.648 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http) 
+25-10-27 21:54:56.662 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"] 
+25-10-27 21:54:56.665 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat] 
+25-10-27 21:54:56.665 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.44] 
+25-10-27 21:54:56.698 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext 
+25-10-27 21:54:56.699 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1655 ms 
+25-10-27 21:54:56.899 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default] 
+25-10-27 21:54:56.966 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.26.Final 
+25-10-27 21:54:57.011 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled 
+25-10-27 21:54:57.313 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer 
+25-10-27 21:54:57.580 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'org.sqlite.SQLiteDataSource@317890ea']
+	Database driver: undefined/unknown
+	Database version: 3.50.3
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown 
+25-10-27 21:54:58.202 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration) 
+25-10-27 21:54:58.228 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default' 
+25-10-27 21:54:58.517 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used. 
+25-10-27 21:54:58.609 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning 
+25-10-27 21:54:58.706 [main] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html] 
+25-10-27 21:54:59.122 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"] 
+25-10-27 21:54:59.149 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/' 
+25-10-27 21:54:59.167 [main] INFO  c.v.vatManager.VatManagerApplication - Started VatManagerApplication in 4.64 seconds (process running for 5.434) 
+25-10-27 21:55:03.543 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet' 
+25-10-27 21:55:03.544 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet' 
+25-10-27 21:55:03.545 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms 
+25-10-27 21:55:03.833 [http-nio-8080-exec-5] INFO  c.v.vatManager.utils.PageableUtils -  : This is the sortDirection received in the pageableUtils method. 
+25-10-27 21:55:03.833 [http-nio-8080-exec-5] INFO  c.v.v.service.ClientServiceImpl - Getting all the Clients from the Database. 
+25-10-27 21:55:10.692 [http-nio-8080-exec-7] INFO  c.v.vatManager.utils.PageableUtils -  : This is the sortDirection received in the pageableUtils method. 
+25-10-27 21:57:54.172 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete 
+25-10-27 21:57:54.195 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete 
+25-10-27 21:57:54.198 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default' 
