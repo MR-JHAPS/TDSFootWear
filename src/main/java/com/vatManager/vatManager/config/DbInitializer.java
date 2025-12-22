@@ -30,7 +30,7 @@ public class DbInitializer {
 		Files.createDirectories(Paths.get(dbFolder));
 		
 		// " userHome/TDS-ClientManager/db.sqlite "
-		String dbPath = dbFolder + "/db.sqlite";
+		String dbPath = dbFolder + "/database.sqlite";
 		File dbFile = new File(dbPath);
 		
 		if(!dbFile.exists()) {

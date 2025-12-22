@@ -31,11 +31,11 @@
     <appender name = "myFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<!--        This file/fileName should be before the rollingPolicy probably to give the name that fileNamePattern can refer to -->
         <file>
-            logs/clientRecords.log
+            ${user.home}/VatManager/logs/clientRecords.log
         </file>
 		<!--         Generates new log files with given criteria below -->
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>logs/clientRecords-%d{yy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>${user.home}/VatManager/logs/clientRecords-%d{yy-MM-dd}.%i.log</fileNamePattern>
             <maxFileSize>10MB</maxFileSize>
             <maxHistory>30</maxHistory>
         </rollingPolicy>

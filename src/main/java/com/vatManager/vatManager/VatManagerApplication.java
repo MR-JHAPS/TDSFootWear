@@ -20,7 +20,9 @@ public class VatManagerApplication {
 //		String dbPath = DbInitializer.initializeDb("TDS-ClientManager");
 		
 
-		DbInitializer.initializeDb("TDS-ClientManager");
+		String dbPath = DbInitializer.initializeDb("TDS-ClientManager");
+		System.setProperty("DB_PATH", dbPath);
+		
 		
 		
 		
