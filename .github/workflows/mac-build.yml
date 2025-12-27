@@ -1,0 +1,61 @@
+name: Build TDS Manager
+on:
+  push:
+    branches: [ macos ] # Triggers when you push to the 'macos' branch
+
+jobs:
+  build-and-package:
+    name: Build on ${{ matrix.os }}
+    strategy:
+      fail-fast: false # Ensures if one OS fails, the other keeps building
+      matrix:
+        os: [windows-latest, macos-latest]
+    
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      # 1. Build the fresh JAR from source
+      - name: Build with Maven
+        run: mvn clean package -DskipTests
+
+      # 2. Clean up and prepare your custom project structure
+      - name: Setup Packaging Directories
+        shell: bash
+        run: |
+          rm -rf package-work/input package-work/output
+          mkdir -p package-work/input package-work/output
+          # Copy the newly built JAR into the input folder as appv1.jar
+          cp target/*.jar package-work/input/appv1.jar
+
+      
+
+      # 4. Build for macOS (DMG)
+      - name: Package for macOS
+        if: matrix.os == 'macos-latest'
+        run: |
+          jpackage --name "TDS-Manager" \
+                   --vendor "Neraz-Oli" \
+                   --input package-work/input \
+                   --main-jar appv1.jar \
+                   --main-class org.springframework.boot.loader.launch.JarLauncher \
+                   --type dmg \
+                   --dest package-work/output \
+                   --mac-package-identifier com.tds.manager \
+                   --icon src/main/resources/static/tdsLogo.icns
+
+      # 5. Upload the resulting installer so you can download it
+      - name: Upload Installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: TDS-Manager-${{ matrix.os }}
+          path: package-work/output/*
