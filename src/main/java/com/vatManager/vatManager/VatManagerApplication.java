@@ -6,6 +6,7 @@ import java.net.URI;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 
@@ -15,20 +16,22 @@ import com.vatManager.vatManager.config.DbInitializer;
 public class VatManagerApplication {
 
 	public static void main(String[] args) throws IOException{
-		SpringApplication.run(VatManagerApplication.class, args);
 		
-//		String dbPath = DbInitializer.initializeDb("TDS-ClientManager");
-		
-
 		String dbPath = DbInitializer.initializeDb("TDS-ClientManager");
 		System.setProperty("DB_PATH", dbPath);
 		
+//		This is for the macos to show the coffee in Dock/tray.
+		System.setProperty("apple.awt.UIElement", "true");
+		
+		SpringApplicationBuilder builder = new SpringApplicationBuilder(VatManagerApplication.class);
+		// This is the "magic" line that allows the System Tray to work
+	    builder.headless(false).run(args);
+		
+//		SpringApplication.run(VatManagerApplication.class, args);
 		
 		
 		
 		
-		//Automatically opens the angular front end stored in resources/static
-//		openBrowser("http://localhost:8080");
 	}
 	
 
@@ -46,16 +49,6 @@ public class VatManagerApplication {
 		}).start();
     }
 	
-//	 private static void openBrowser(String url) {
-//	        try {
-//	            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-//	                Desktop.getDesktop().browse(new URI(url));
-//	            }
-//	        } catch (Exception e) {
-//	            e.printStackTrace();
-//	        }
-//	    }
-
 	private static void openBrowser(String url) {
 	    String os = System.getProperty("os.name").toLowerCase();
 	    Runtime rt = Runtime.getRuntime();
