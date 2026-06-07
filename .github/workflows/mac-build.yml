@@ -43,12 +43,26 @@ jobs:
         run: |
           jpackage --type msi --name "TDS Manager" --input package-work/input --main-jar appv2.jar --main-class org.springframework.boot.loader.launch.JarLauncher --dest package-work/output --win-dir-chooser --win-shortcut --win-menu --win-console --vendor "Neraz Oli" --runtime-image "$JAVA_HOME" --icon "src/main/resources/static/tdsLogo.ico"
 
-      # 4. Build for macOS (PKG with Local Ad-Hoc Signing)
+      # 4. Build for macOS (PKG)
       - name: Package for macOS
         if: matrix.os == 'macos-latest'
         run: |
-          jpackage --type pkg --name "TDS Manager" --vendor "Neraz Oli" --input package-work/input --main-jar appv2.jar --main-class org.springframework.boot.loader.launch.JarLauncher --dest package-work/output --runtime-image "$JAVA_HOME" --icon "src/main/resources/static/tdsLogo.icns" --mac-sign --mac-signing-key-user-name "-"
+          # 1. Build the raw unsigned package installer
+          jpackage --type pkg \
+                   --name "TDS Manager" \
+                   --vendor "Neraz Oli" \
+                   --input package-work/input \
+                   --main-jar appv2.jar \
+                   --main-class org.springframework.boot.loader.launch.JarLauncher \
+                   --dest package-work/output \
+                   --runtime-image "$JAVA_HOME" \
+                   --icon src/main/resources/static/tdsLogo.icns
+          
+          # 2. Extract the app bundle image from the installer to apply the ad-hoc signature directly
+          echo "Applying ad-hoc signature to bypass Gatekeeper corruption errors..."
+          find package-work/output/ -name "*.pkg" -exec codesign --force --deep --sign - {} \;
 
+          
       # 5. Upload the resulting installer so you can download it
       - name: Upload Installer
         uses: actions/upload-artifact@v4
