@@ -24,8 +24,12 @@ public class Kharid {
 	private Integer id;
 	
 	private String foomName;
-
-	private LocalDate date;
+	
+	private Integer yearInBs;
+	
+	private Integer monthInBs;
+	
+	private Integer dayInBs;
 
 	private Integer billNumber;
 	

@@ -19,7 +19,9 @@ public class ClientMapper {
 				.panNumber(dto.getPanNumber())
 				.total(dto.getTotal())
 				.vatTax(dto.getVatTax())
-				.date(dto.getDate())
+				.yearInBs(dto.getYearInBs())
+				.monthInBs(dto.getMonthInBs())
+				.dayInBs(dto.getDayInBs())
 				.build();
 		return client;
 	}
@@ -36,7 +38,9 @@ public class ClientMapper {
 				.panNumber(client.getPanNumber())
 				.total(client.getTotal())
 				.vatTax(client.getVatTax())
-				.date(client.getDate())
+				.yearInBs(client.getYearInBs())
+				.monthInBs(client.getMonthInBs())
+				.dayInBs(client.getDayInBs())
 				.build();
 		return responseDto;
 	}

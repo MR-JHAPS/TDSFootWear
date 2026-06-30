@@ -16,9 +16,15 @@ public class KharidRequestDto {
 
 	@NotBlank(message = "foomName cannot be blank in KharidRequestDto")
 	private String foomName;
-
-	@NotNull(message = "date cannot be null in KharidRequestDto")
-	private LocalDate date;
+	
+	@NotNull(message = "yearInBs cannot be null in KharidRequestDto")
+	private Integer yearInBs;
+	
+	@NotNull(message = "monthInBs cannot be null in KharidRequestDto")
+	private Integer monthInBs;
+	
+	@NotNull(message = "dayInBs cannot be null in KharidRequestDto")
+	private Integer dayInBs;
 
 	@NotNull(message = "Bill Number cannot be blank in KharidRequestDto")
 	private Integer billNumber;

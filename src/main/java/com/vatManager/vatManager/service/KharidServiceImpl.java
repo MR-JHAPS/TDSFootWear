@@ -79,7 +79,9 @@ public class KharidServiceImpl implements KharidService{
 		kharid.setFoomName(request.getFoomName());
 		kharid.setBillNumber(request.getBillNumber());
 		kharid.setAmount(request.getAmount());
-		kharid.setDate(request.getDate());
+		kharid.setYearInBs(request.getYearInBs());
+		kharid.setMonthInBs(request.getMonthInBs());
+		kharid.setDayInBs(request.getDayInBs());
 		kharid.setPanNumber(request.getPanNumber());
 		kharid.setVatTax(request.getVatTax());
 		kharid.setTotal(request.getTotal());

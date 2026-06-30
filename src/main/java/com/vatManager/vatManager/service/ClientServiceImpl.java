@@ -78,7 +78,9 @@ public class ClientServiceImpl implements ClientService{
 		client.setFoomName(request.getFoomName());
 		client.setBillNumber(request.getBillNumber());
 		client.setAmount(request.getAmount());
-		client.setDate(request.getDate());
+		client.setYearInBs(request.getYearInBs());
+		client.setMonthInBs(request.getMonthInBs());
+		client.setDayInBs(request.getDayInBs());
 		client.setPanNumber(request.getPanNumber());
 		client.setVatTax(request.getVatTax());
 		client.setTotal(request.getTotal());

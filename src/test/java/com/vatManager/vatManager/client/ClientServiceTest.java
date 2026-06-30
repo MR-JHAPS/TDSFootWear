@@ -1,5 +1,5 @@
 
-
+/*
 
 package com.vatManager.vatManager.client;
 
@@ -189,3 +189,4 @@ public class ClientServiceTest {
 //	
 //	
 //}//ends test Class
+///*/

@@ -29,12 +29,14 @@ public class ExcelUtils {
 		Row header = sheet.createRow(0);
 		header.createCell(0).setCellValue("ID");
 		header.createCell(1).setCellValue("FOOM-NAME");
-		header.createCell(2).setCellValue("DATE");
-		header.createCell(3).setCellValue("BILL-NUMBER");
-		header.createCell(4).setCellValue("PAN-NUMBER");
-		header.createCell(5).setCellValue("AMOUNT");
-		header.createCell(6).setCellValue("VAT-TAX");
-		header.createCell(7).setCellValue("TOTAL");
+		header.createCell(2).setCellValue("YEAR");
+		header.createCell(3).setCellValue("MONTH");
+		header.createCell(4).setCellValue("DAY");
+		header.createCell(5).setCellValue("BILL-NUMBER");
+		header.createCell(6).setCellValue("PAN-NUMBER");
+		header.createCell(7).setCellValue("AMOUNT");
+		header.createCell(8).setCellValue("VAT-TAX");
+		header.createCell(9).setCellValue("TOTAL");
 	
 		//Data row for the spreadsheet/excel.
 		
@@ -44,23 +46,15 @@ public class ExcelUtils {
 			
 			Row row = sheet.createRow(rowNumber++);
 			row.createCell(0).setCellValue(client.getId());
-			row.createCell(1).setCellValue(client.getFoomName());
-			
-			Cell dateCell = row.createCell(2);
-			LocalDate localDate = client.getDate();
-			Date date = Date.valueOf(localDate);
-			dateCell.setCellValue(date);
-			CellStyle dateStyle = workbook.createCellStyle();
-			CreationHelper createHelper = workbook.getCreationHelper();
-			dateStyle.setDataFormat(createHelper.createDataFormat().getFormat("yyyy-MM-dd"));
-			dateCell.setCellStyle(dateStyle);
-			
-			row.createCell(3).setCellValue(client.getBillNumber());
-			row.createCell(4).setCellValue(client.getPanNumber());
-			row.createCell(5).setCellValue(client.getAmount().doubleValue());
-			row.createCell(6).setCellValue(client.getVatTax().doubleValue());
-			row.createCell(7).setCellValue(client.getTotal().doubleValue());
-			
+			row.createCell(1).setCellValue(client.getFoomName());			
+			row.createCell(2).setCellValue(client.getYearInBs());			
+			row.createCell(3).setCellValue(client.getMonthInBs());			
+			row.createCell(4).setCellValue(client.getDayInBs());
+			row.createCell(4).setCellValue(client.getBillNumber());
+			row.createCell(5).setCellValue(client.getPanNumber());
+			row.createCell(6).setCellValue(client.getAmount().doubleValue());
+			row.createCell(7).setCellValue(client.getVatTax().doubleValue());
+			row.createCell(8).setCellValue(client.getTotal().doubleValue());
 		}// ends for
 		
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -88,12 +82,14 @@ public static byte[] createExcelBytesKharid(List<KharidResponseDto> kharidList) 
 		Row header = sheet.createRow(0);
 		header.createCell(0).setCellValue("ID");
 		header.createCell(1).setCellValue("FOOM-NAME");
-		header.createCell(2).setCellValue("DATE");
-		header.createCell(3).setCellValue("BILL-NUMBER");
-		header.createCell(4).setCellValue("PAN-NUMBER");
-		header.createCell(5).setCellValue("AMOUNT");
-		header.createCell(6).setCellValue("VAT-TAX");
-		header.createCell(7).setCellValue("TOTAL");
+		header.createCell(2).setCellValue("YEAR");
+		header.createCell(3).setCellValue("MONTH");
+		header.createCell(4).setCellValue("DAY");
+		header.createCell(5).setCellValue("BILL-NUMBER");
+		header.createCell(6).setCellValue("PAN-NUMBER");
+		header.createCell(7).setCellValue("AMOUNT");
+		header.createCell(8).setCellValue("VAT-TAX");
+		header.createCell(9).setCellValue("TOTAL");
 	
 		//Data row for the spreadsheet/excel.
 		
@@ -104,21 +100,14 @@ public static byte[] createExcelBytesKharid(List<KharidResponseDto> kharidList) 
 			Row row = sheet.createRow(rowNumber++);
 			row.createCell(0).setCellValue(kharid.getId());
 			row.createCell(1).setCellValue(kharid.getFoomName());
-			
-			Cell dateCell = row.createCell(2);
-			LocalDate localDate = kharid.getDate();
-			Date date = Date.valueOf(localDate);
-			dateCell.setCellValue(date);
-			CellStyle dateStyle = workbook.createCellStyle();
-			CreationHelper createHelper = workbook.getCreationHelper();
-			dateStyle.setDataFormat(createHelper.createDataFormat().getFormat("yyyy-MM-dd"));
-			dateCell.setCellStyle(dateStyle);
-			
-			row.createCell(3).setCellValue(kharid.getBillNumber());
-			row.createCell(4).setCellValue(kharid.getPanNumber());
-			row.createCell(5).setCellValue(kharid.getAmount().doubleValue());
-			row.createCell(6).setCellValue(kharid.getVatTax().doubleValue());
-			row.createCell(7).setCellValue(kharid.getTotal().doubleValue());
+			row.createCell(2).setCellValue(kharid.getYearInBs());			
+			row.createCell(3).setCellValue(kharid.getMonthInBs());			
+			row.createCell(4).setCellValue(kharid.getDayInBs());
+			row.createCell(5).setCellValue(kharid.getBillNumber());
+			row.createCell(6).setCellValue(kharid.getPanNumber());
+			row.createCell(7).setCellValue(kharid.getAmount().doubleValue());
+			row.createCell(8).setCellValue(kharid.getVatTax().doubleValue());
+			row.createCell(9).setCellValue(kharid.getTotal().doubleValue());
 			
 		}// ends for
 		

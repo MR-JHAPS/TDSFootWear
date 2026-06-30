@@ -17,7 +17,9 @@ public class KharidMapper {
 				.panNumber(dto.getPanNumber())
 				.total(dto.getTotal())
 				.vatTax(dto.getVatTax())
-				.date(dto.getDate())
+				.yearInBs(dto.getYearInBs())
+				.monthInBs(dto.getMonthInBs())
+				.dayInBs(dto.getDayInBs())
 				.build();
 		return kharid;
 	}
@@ -34,7 +36,9 @@ public class KharidMapper {
 				.panNumber(kharid.getPanNumber())
 				.total(kharid.getTotal())
 				.vatTax(kharid.getVatTax())
-				.date(kharid.getDate())
+				.yearInBs(kharid.getYearInBs())
+				.monthInBs(kharid.getMonthInBs())
+				.dayInBs(kharid.getDayInBs())
 				.build();
 		return responseDto;
 	}

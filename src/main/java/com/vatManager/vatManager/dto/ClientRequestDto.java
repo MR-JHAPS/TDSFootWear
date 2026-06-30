@@ -18,9 +18,16 @@ public class ClientRequestDto {
 	@NotBlank(message = "foomName cannot be blank in ClientRequestDto")
 	private String foomName;
 
-	@NotNull(message = "date cannot be null in ClientRequestDto")
-	private LocalDate date;
 
+	@NotNull(message = "yearInBs cannot be null in ClientRequestDto")
+	private Integer yearInBs;
+	
+	@NotNull(message = "monthInBs cannot be null in ClientRequestDto")
+	private Integer monthInBs;
+	
+	@NotNull(message = "dayInBs cannot be null in ClientRequestDto")
+	private Integer dayInBs;
+	
 	@NotNull(message = "Bill Number cannot be blank in ClientRequestDto")
 	private Integer billNumber;
 		

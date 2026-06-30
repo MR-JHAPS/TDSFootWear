@@ -17,7 +17,11 @@ public class ClientResponseDto {
 
 	private String foomName;
 
-	private LocalDate date;
+	private Integer yearInBs;
+	
+	private Integer monthInBs;
+	
+	private Integer dayInBs;
 
 	private Integer billNumber;
 	
