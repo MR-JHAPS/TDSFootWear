@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
@@ -22,96 +21,95 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.HttpServerErrorException.InternalServerError;
 
 import com.vatManager.vatManager.apiResponse.ApiResponseBuilder;
 import com.vatManager.vatManager.apiResponse.ApiResponseModel;
-import com.vatManager.vatManager.dto.ClientRequestDto;
-import com.vatManager.vatManager.dto.ClientResponseDto;
-import com.vatManager.vatManager.service.ClientService;
+import com.vatManager.vatManager.dto.KharidRequestDto;
+import com.vatManager.vatManager.dto.KharidResponseDto;
+import com.vatManager.vatManager.service.KharidService;
 import com.vatManager.vatManager.service.PagedResourceAssemblerService;
 import com.vatManager.vatManager.utils.ExcelUtils;
 import com.vatManager.vatManager.utils.PageableUtils;
 
 import jakarta.validation.Valid;
 
-
-//THis is the bikri khata.
 @RestController
-@RequestMapping("/api/client")
-public class ClientController {
-	
-	@Autowired
-	private ClientService clientService;
-	
+@RequestMapping("/api/kharid")
+public class KharidController {
+
 	@Autowired
 	private ApiResponseBuilder responseBuilder;
 	
 	@Autowired
-	private PagedResourceAssemblerService<ClientResponseDto> pagedResourceAssembler;
+	private PagedResourceAssemblerService<KharidResponseDto> pagedResourceAssembler;
+	
+	@Autowired
+	private KharidService kharidService;
 
+	
+	
 	
 
 	@GetMapping
-	public ResponseEntity<ApiResponseModel<PagedModel<EntityModel<ClientResponseDto>>>> getAllClients(
+	public ResponseEntity<ApiResponseModel<PagedModel<EntityModel<KharidResponseDto>>>> getAllKharids(
 						@RequestParam(defaultValue = "10") int size,
 						@RequestParam(defaultValue = "0") int page, 
 						@RequestParam(required = false) String sortBy,
 						@RequestParam(required = false) String direction)
 	{
 		Pageable pageable = PageableUtils.createPageable(page, size, direction, sortBy);
-		Page<ClientResponseDto> clientResponseList = this.clientService.getAllClients(pageable);
-		PagedModel<EntityModel<ClientResponseDto>> pagedModel = pagedResourceAssembler.toPagedModel(clientResponseList);
-		return responseBuilder.buildApiResponse("Client Obtained Successfully", pagedModel, HttpStatus.OK);
+		Page<KharidResponseDto> kharidResponseList = this.kharidService.getAllKharid(pageable);
+		PagedModel<EntityModel<KharidResponseDto>> pagedModel = pagedResourceAssembler.toPagedModel(kharidResponseList);
+		return responseBuilder.buildApiResponse("Kharids Obtained Successfully", pagedModel, HttpStatus.OK);
 	}
 	
 	
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<ApiResponseModel<ClientResponseDto>> getClientById(@PathVariable int id){
-		ClientResponseDto clientResponse = clientService.getClientDtoResponseById(id);
-		return responseBuilder.buildApiResponse("Client Obtained Successfully", clientResponse, HttpStatus.OK);
+	public ResponseEntity<ApiResponseModel<KharidResponseDto>> getKharidById(@PathVariable int id){
+		KharidResponseDto kharidResponse = kharidService.getKharidDtoResponseById(id);
+		return responseBuilder.buildApiResponse("Kharid Obtained Successfully", kharidResponse, HttpStatus.OK);
 	}
 	
 	
 	
 	@PostMapping("/insert")
-	public ResponseEntity<ApiResponseModel<String>> insertNewClient(@RequestBody @Valid ClientRequestDto request) {
-		this.clientService.insertClient(request);
-		return responseBuilder.buildApiResponse("Client Successfully Inserted", HttpStatus.OK);
+	public ResponseEntity<ApiResponseModel<String>> insertNewKharid(@RequestBody @Valid KharidRequestDto request) {
+		this.kharidService.insertKharid(request);
+		return responseBuilder.buildApiResponse("Kharid Successfully Inserted", HttpStatus.OK);
 	}
 	
 	
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<ApiResponseModel<String>> updateClient(@PathVariable int id, @RequestBody ClientRequestDto request) {
-		this.clientService.updateClientById(id, request);
-		return responseBuilder.buildApiResponse("Client Successfully Updated", HttpStatus.OK);
+	public ResponseEntity<ApiResponseModel<String>> updateKharid(@PathVariable int id, @RequestBody KharidRequestDto request) {
+		this.kharidService.updateKharidById(id, request);
+		return responseBuilder.buildApiResponse("Kharid Successfully Updated", HttpStatus.OK);
 	}
 	
 	
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<ApiResponseModel<String>> deleteClientById(@PathVariable int id) {
-		this.clientService.deleteClientById(id);
-		return responseBuilder.buildApiResponse("Client Successfully Deleted", HttpStatus.NO_CONTENT);
+	public ResponseEntity<ApiResponseModel<String>> deleteKharidById(@PathVariable int id) {
+		this.kharidService.deleteKharidById(id);
+		return responseBuilder.buildApiResponse("Kharid Successfully Deleted", HttpStatus.NO_CONTENT);
 	}
 	
 	
 	
 	
 	// Theoretically this should work.
-	@GetMapping("/download/clients")
-	public ResponseEntity<byte[]> exportClientsToExcel() {
-		List<ClientResponseDto> clientList = clientService.getAllClients();
-		System.out.println("Downloading Excel File of Clients");
+	@GetMapping("/download/kharids")
+	public ResponseEntity<byte[]> exportKharidsToExcel() {
+		List<KharidResponseDto> kharidList = kharidService.getAllKharid();
+		System.out.println("Downloading Excel File of Kharids");
 		try {
-			byte[] byteValue = ExcelUtils.createExcelBytes(clientList);
+			byte[] byteValue = ExcelUtils.createExcelBytesKharid(kharidList);
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-			headers.setContentDispositionFormData("attachment", "tdsClients.xlsx");
+			headers.setContentDispositionFormData("attachment", "tdsClientsKharid.xlsx");
 //			ApiResponseModel<byte[]> customResponse = new ApiResponseModel<byte[]>("Excel Data for Client sent successfully.", byteValue);
-			System.out.println("success with excel file");
+			System.out.println("success with excel file of Kharid");
 			return ResponseEntity.status(HttpStatus.OK).headers(headers).body(byteValue);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -123,7 +121,7 @@ public class ClientController {
 	
 	
 	@GetMapping("/search")
-	public ResponseEntity<ApiResponseModel<PagedModel<EntityModel<ClientResponseDto>>>> searchClientsByQuery(
+	public ResponseEntity<ApiResponseModel<PagedModel<EntityModel<KharidResponseDto>>>> searchKharidsByQuery(
 			@RequestParam String query,
 			@RequestParam (defaultValue = "0") int page,
 			@RequestParam (defaultValue = "10") int size,
@@ -132,10 +130,11 @@ public class ClientController {
 			){
 		System.out.println("Search Controller called");
 		Pageable pageable = PageableUtils.createPageable(page, size, direction, sortBy);
-		Page<ClientResponseDto> clientResponseList = clientService.searchClient(query, pageable);
-		PagedModel<EntityModel<ClientResponseDto>> pagedModel = pagedResourceAssembler.toPagedModel(clientResponseList);
-		return responseBuilder.buildApiResponse("Client Search Successfully obtained", pagedModel, HttpStatus.OK);
+		Page<KharidResponseDto> kharidResponseList = kharidService.searchKharid(query, pageable);
+		PagedModel<EntityModel<KharidResponseDto>> pagedModel = pagedResourceAssembler.toPagedModel(kharidResponseList);
+		return responseBuilder.buildApiResponse("Kharid Search Successfully obtained", pagedModel, HttpStatus.OK);
 	}
+	
 	
 	
 }

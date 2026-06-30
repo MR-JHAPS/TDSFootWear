@@ -1,20 +1,28 @@
-package com.vatManager.vatManager.dto;
+package com.vatManager.vatManager.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-
+@Entity
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class ClientResponseDto {
-	
-	private Integer id;
+public class Kharid {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	
 	private String foomName;
 
 	private LocalDate date;
@@ -28,4 +36,7 @@ public class ClientResponseDto {
 	private BigDecimal vatTax;
 	
 	private BigDecimal total;
+	
+	
+	
 }

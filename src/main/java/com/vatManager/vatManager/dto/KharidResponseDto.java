@@ -11,8 +11,8 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 @Builder
-public class ClientResponseDto {
-	
+public class KharidResponseDto {
+
 	private Integer id;
 
 	private String foomName;

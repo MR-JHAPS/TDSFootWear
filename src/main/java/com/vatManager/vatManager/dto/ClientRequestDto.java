@@ -1,5 +1,6 @@
 package com.vatManager.vatManager.dto;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import jakarta.validation.constraints.NotBlank;
@@ -27,13 +28,13 @@ public class ClientRequestDto {
 	private Integer panNumber;
 	
 	@NotNull(message = "Amount cannot be blank in ClientRequestDto")
-	private Integer amount;
+	private BigDecimal amount;
 	
 	@NotNull(message = "VatTax cannot be blank in ClientRequestDto")
-	private Integer vatTax;
+	private BigDecimal vatTax;
 	
 	@NotNull(message = "Total cannot be blank in ClientRequestDto")
-	private Integer total;
+	private BigDecimal total;
 	
 	
 	

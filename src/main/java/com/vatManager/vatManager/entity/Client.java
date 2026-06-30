@@ -1,5 +1,6 @@
 package com.vatManager.vatManager.entity;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
@@ -30,11 +31,11 @@ public class Client {
 	
 	private Integer panNumber;
 	
-	private Integer amount;
+	private BigDecimal amount;
 	
-	private Integer vatTax;
+	private BigDecimal vatTax;
 	
-	private Integer total;
+	private BigDecimal total;
 	
 	
 	
