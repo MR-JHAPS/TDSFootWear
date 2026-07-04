@@ -23,6 +23,8 @@ public class PagedResourceAssemblerService<T> {
 		return (PagedModel<EntityModel<T>>) pagedResourceAssembler.toModel(paginatedEntity);
 	}
 	
+
+	
 	
 	
 }//ends class

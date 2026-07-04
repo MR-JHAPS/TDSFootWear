@@ -3,9 +3,16 @@ package com.vatManager.vatManager.dto;
 import java.math.BigDecimal;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
+@Builder
 public class WrapperClientResponse {
 	
-	List<ClientResponseDto> client;
-	BigDecimal monthlyTotal;
+	private List<ClientResponseDto> client;
+	private BigDecimal monthlyTotal;
 
 }

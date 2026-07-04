@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
@@ -22,12 +21,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.HttpServerErrorException.InternalServerError;
-
 import com.vatManager.vatManager.apiResponse.ApiResponseBuilder;
 import com.vatManager.vatManager.apiResponse.ApiResponseModel;
 import com.vatManager.vatManager.dto.ClientRequestDto;
 import com.vatManager.vatManager.dto.ClientResponseDto;
+import com.vatManager.vatManager.dto.WrapperClientResponse;
 import com.vatManager.vatManager.service.ClientService;
 import com.vatManager.vatManager.service.PagedResourceAssemblerService;
 import com.vatManager.vatManager.utils.ExcelUtils;
@@ -48,22 +46,48 @@ public class ClientController {
 	private ApiResponseBuilder responseBuilder;
 	
 	@Autowired
-	private PagedResourceAssemblerService<ClientResponseDto> pagedResourceAssembler;
+	private PagedResourceAssemblerService<WrapperClientResponse> pagedResourceAssembler;
 
 	
 
 	@GetMapping
-	public ResponseEntity<ApiResponseModel<PagedModel<EntityModel<ClientResponseDto>>>> getAllClients(
+	public ResponseEntity<ApiResponseModel<PagedModel<EntityModel<WrapperClientResponse>>>> getAllClientsMonthly(
 						@RequestParam(defaultValue = "10") int size,
 						@RequestParam(defaultValue = "0") int page, 
 						@RequestParam(required = false) String sortBy,
 						@RequestParam(required = false) String direction)
 	{
 		Pageable pageable = PageableUtils.createPageable(page, size, direction, sortBy);
-		Page<ClientResponseDto> clientResponseList = this.clientService.getAllClients(pageable);
-		PagedModel<EntityModel<ClientResponseDto>> pagedModel = pagedResourceAssembler.toPagedModel(clientResponseList);
+		System.out.println("Initiating getAllClients from clientController");
+		Page<WrapperClientResponse> clientResponseList = this.clientService.getAllClientsMonthly(pageable);
+		PagedModel<EntityModel<WrapperClientResponse>> pagedModel = pagedResourceAssembler.toPagedModel(clientResponseList);
+//		System.out.println(" THis is the API Sending DATA in get All Clients , " + clientResponseList);
+		for(WrapperClientResponse wrapper : clientResponseList) {
+			System.out.println(wrapper);
+			List<ClientResponseDto> responseList = wrapper.getClient();
+			for(ClientResponseDto client : responseList) {
+				System.out.println(client.getFoomName() + "this is the name of the FOOM");
+			}
+			
+			
+		}
 		return responseBuilder.buildApiResponse("Client Obtained Successfully", pagedModel, HttpStatus.OK);
 	}
+	
+	
+	
+//	@GetMapping
+//	public ResponseEntity<ApiResponseModel<PagedModel<EntityModel<ClientResponseDto>>>> getAllClients(
+//			@RequestParam(defaultValue = "10") int size,
+//			@RequestParam(defaultValue = "0") int page, 
+//			@RequestParam(required = false) String sortBy,
+//			@RequestParam(required = false) String direction)
+//	{
+//		Pageable pageable = PageableUtils.createPageable(page, size, direction, sortBy);
+//		Page<ClientResponseDto> clientResponseList = this.clientService.getAllClients(pageable);
+//		PagedModel<EntityModel<ClientResponseDto>> pagedModel = pagedResourceAssembler.toPagedModel(clientResponseList);
+//		return responseBuilder.buildApiResponse("Client Obtained Successfully", pagedModel, HttpStatus.OK);
+//	}
 	
 	
 	
@@ -123,7 +147,7 @@ public class ClientController {
 	
 	
 	@GetMapping("/search")
-	public ResponseEntity<ApiResponseModel<PagedModel<EntityModel<ClientResponseDto>>>> searchClientsByQuery(
+	public ResponseEntity<ApiResponseModel<PagedModel<EntityModel<WrapperClientResponse>>>> searchClientsByQuery(
 			@RequestParam String query,
 			@RequestParam (defaultValue = "0") int page,
 			@RequestParam (defaultValue = "10") int size,
@@ -132,8 +156,8 @@ public class ClientController {
 			){
 		System.out.println("Search Controller called");
 		Pageable pageable = PageableUtils.createPageable(page, size, direction, sortBy);
-		Page<ClientResponseDto> clientResponseList = clientService.searchClient(query, pageable);
-		PagedModel<EntityModel<ClientResponseDto>> pagedModel = pagedResourceAssembler.toPagedModel(clientResponseList);
+		Page<WrapperClientResponse> clientResponseList = clientService.searchClient(query, pageable);
+		PagedModel<EntityModel<WrapperClientResponse>> pagedModel = pagedResourceAssembler.toPagedModel(clientResponseList);
 		return responseBuilder.buildApiResponse("Client Search Successfully obtained", pagedModel, HttpStatus.OK);
 	}
 	
