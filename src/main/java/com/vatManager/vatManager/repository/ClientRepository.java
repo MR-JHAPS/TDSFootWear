@@ -12,14 +12,15 @@ import com.vatManager.vatManager.entity.Client;
 @Repository
 public interface ClientRepository extends JpaRepository<Client, Integer>{
 
-//	Page<Client> findAll(Pageable pageable);
+//	@Query("SELECT c FROM Client c ORDER BY c.id DESC")
+	Page<Client> findAll(Pageable pageable);
 
 	
 //	@Query(value="SELECT * FROM client c ORDER BY c.year_in_bs, c.month_in_bs, c.day_in_bs", nativeQuery = true)
 //	Page<Client> findAll(Pageable pageable);
 	
 	@Query("SELECT c FROM Client c ORDER BY c.yearInBs DESC, c.monthInBs DESC, c.dayInBs DESC")
-	Page<Client> findAll(Pageable pageable);
+	Page<Client> findAllMonthly(Pageable pageable);
 //	@Query("select ")
 //	Page<Client> searchClientByQuery(String searchQuery, Pageable pageable);
 

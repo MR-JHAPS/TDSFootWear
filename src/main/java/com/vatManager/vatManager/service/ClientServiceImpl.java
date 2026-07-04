@@ -43,7 +43,7 @@ public class ClientServiceImpl implements ClientService{
 	@Override
 	public Page<WrapperClientResponse> getAllClientsMonthly(Pageable pageable) {
 		log.info("Getting all the Clients from the Database.");
-		Page<Client> clientList = this.clientRepo.findAll(pageable);
+		Page<Client> clientList = this.clientRepo.findAllMonthly(pageable);
 		Page<ClientResponseDto> pagedResponse  = clientList.map(clientMapper::toClientResponseDto);		
 		Page<WrapperClientResponse> wrappedPagedResponse = getWrapperClientResponseList(pagedResponse);
 		
@@ -54,6 +54,7 @@ public class ClientServiceImpl implements ClientService{
 	public Page<ClientResponseDto> getAllClients(Pageable pageable) {
 		log.info("Getting all the Clients from the Database.");
 		Page<Client> clientList = this.clientRepo.findAll(pageable);
+		log.info("Fetched from ClientRepository");
 		Page<ClientResponseDto> pagedResponse  = clientList.map(clientMapper::toClientResponseDto);		
 		
 		log.info("Request has Arrived at getAllClients(Pageable pageable) in ClientServiceImpl.");
@@ -120,11 +121,10 @@ public class ClientServiceImpl implements ClientService{
 	
 	
 	@Override
-	public Page<WrapperClientResponse> searchClient(String searchQuery, Pageable pageable) {
+	public Page<ClientResponseDto> searchClient(String searchQuery, Pageable pageable) {
 		Page<Client> clientList = clientRepo.searchByQuery(searchQuery, pageable);
 		Page<ClientResponseDto> clientResponseList = clientList.map(clientMapper::toClientResponseDto);
-		Page<WrapperClientResponse> wrappedPagedResponse = getWrapperClientResponseList(clientResponseList);
-		return wrappedPagedResponse;
+		return clientResponseList;
 	}
 //	@Override
 //	public Page<ClientResponseDto> searchClient(String searchQuery, Pageable pageable) {
@@ -236,28 +236,16 @@ public class ClientServiceImpl implements ClientService{
 				}
 				
 				
-				
 		}//ends For-Loop
 				
 				// If the condition of i & i+1 are not equal then push the achieved data to the wrapperClientResponseList.
 			    return new PageImpl<>(wrappedResponseList, rawClientList.getPageable(), wrappedResponseList.size());
 				
-		
-		
-		
 	}//ends Method
 	
 	
 	
 	
-	
-	
-	Page<WrapperClientResponse> toPagedWrapper(List<WrapperClientResponse> wrappedClientList){
-		
-		
-		
-		return null;
-	}
 	
 	
 	

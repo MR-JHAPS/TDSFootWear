@@ -7,15 +7,19 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.vatManager.vatManager.entity.Client;
 import com.vatManager.vatManager.entity.Kharid;
 
 @Repository
 public interface KharidRepository extends JpaRepository<Kharid, Integer>{
-
-Page<Kharid> findAll(Pageable pageable);
 	
-//	@Query("select ")
-//	Page<Client> searchClientByQuery(String searchQuery, Pageable pageable);
+
+//	@Query("SELECT c FROM Kharid c ORDER BY c.id DESC")
+	Page<Kharid> findAll(Pageable pageable);
+	
+	
+	@Query("SELECT c FROM Client c ORDER BY c.yearInBs DESC, c.monthInBs DESC, c.dayInBs DESC")
+	Page<Kharid> findAllMonthly(Pageable pageable);
 
 	@Query(value="SELECT * FROM kharid k WHERE "
 			+ "LOWER(k.foom_name) LIKE :query || '%' "

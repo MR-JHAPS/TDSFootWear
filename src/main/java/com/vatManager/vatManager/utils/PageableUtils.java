@@ -15,6 +15,7 @@ public class PageableUtils {
 	public static Pageable createPageable(int page, int size, String sortDirection, String sortBy) {
 		
 		log.info("{} : This is the sortDirection received in the pageableUtils method.", sortDirection);
+		log.info("{} : This is the sortBy received in the pageableUtils method.", sortBy);
 		Sort.Direction defaultSortDirection = Direction.ASC;
 		Sort.Direction requestedSortDirection;
 
@@ -43,6 +44,7 @@ public class PageableUtils {
 		}
 		
 		Pageable pageableWithDefaultDirection = PageRequest.of(page, size, defaultSortDirection, sortBy);
+		System.out.println("This is the sortBy Value : " + sortBy);
 		return pageableWithDefaultDirection;
 		
 	}

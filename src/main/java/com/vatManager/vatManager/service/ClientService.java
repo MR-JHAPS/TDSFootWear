@@ -32,6 +32,6 @@ public interface ClientService {
 	void insertClient(ClientRequestDto request);
 	
 //	Page<ClientResponseDto> searchClient(String searchQuery, Pageable pageable);
-	Page<WrapperClientResponse> searchClient(String searchQuery, Pageable pageable);
+	Page<ClientResponseDto> searchClient(String searchQuery, Pageable pageable);
 	
 }
