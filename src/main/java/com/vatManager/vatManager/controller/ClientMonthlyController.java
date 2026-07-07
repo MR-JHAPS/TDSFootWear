@@ -42,7 +42,7 @@ public class ClientMonthlyController {
 	
 	@GetMapping("/monthly")
 	public ResponseEntity<ApiResponseModel<PagedModel<EntityModel<WrapperClientResponse>>>> getAllClientsMonthly(
-						@RequestParam(defaultValue = "10") int size,
+						@RequestParam(defaultValue = "2") int size,
 						@RequestParam(defaultValue = "0") int page, 
 						@RequestParam(required = false) String sortBy,
 						@RequestParam(required = false) String direction)
@@ -52,15 +52,15 @@ public class ClientMonthlyController {
 		Page<WrapperClientResponse> clientResponseList = this.clientService.getAllClientsMonthly(pageable);
 		PagedModel<EntityModel<WrapperClientResponse>> pagedModel = pagedResourceAssembler.toPagedModel(clientResponseList);
 //		System.out.println(" THis is the API Sending DATA in get All Clients , " + clientResponseList);
-		for(WrapperClientResponse wrapper : clientResponseList) {
-			System.out.println(wrapper);
-			List<ClientResponseDto> responseList = wrapper.getClient();
-			for(ClientResponseDto client : responseList) {
-				System.out.println(client.getFoomName() + "this is the name of the FOOM");
-			}
-			
-			
-		}
+//		for(WrapperClientResponse wrapper : clientResponseList) {
+//			System.out.println(wrapper);
+//			List<ClientResponseDto> responseList = wrapper.getClient();
+//			for(ClientResponseDto client : responseList) {
+//				System.out.println(client.getFoomName() + "this is the name of the FOOM");
+//			}
+//			
+//			
+//		}
 		return responseBuilder.buildApiResponse("Client Obtained Successfully", pagedModel, HttpStatus.OK);
 	}
 

@@ -18,7 +18,7 @@ public interface KharidRepository extends JpaRepository<Kharid, Integer>{
 	Page<Kharid> findAll(Pageable pageable);
 	
 	
-	@Query("SELECT c FROM Client c ORDER BY c.yearInBs DESC, c.monthInBs DESC, c.dayInBs DESC")
+	@Query("SELECT k FROM Kharid k ORDER BY k.yearInBs DESC, k.monthInBs DESC, k.dayInBs DESC")
 	Page<Kharid> findAllMonthly(Pageable pageable);
 
 	@Query(value="SELECT * FROM kharid k WHERE "
