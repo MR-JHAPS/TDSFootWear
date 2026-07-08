@@ -1,13 +1,13 @@
 name: Build TDS Manager
 on:
   push:
-    branches: [ macos ] # Triggers when you push to the 'macos' branch
+    branches: [ v3 ] # <-- Put your exact new branch name here
 
 jobs:
   build-and-package:
     name: Build on ${{ matrix.os }}
     strategy:
-      fail-fast: false # Ensures if one OS fails, the other keeps building
+      fail-fast: false 
       matrix:
         os: [windows-latest, macos-latest]
     
@@ -32,30 +32,47 @@ jobs:
       - name: Setup Packaging Directories
         shell: bash
         run: |
-          rm -rf package-work/input package-work/output
+          rm -rf package-work/input package-work/output package-work/mac-image
           mkdir -p package-work/input package-work/output
-          # Copy the newly built JAR into the input folder as appv1.jar
-          cp target/*.jar package-work/input/appv1.jar
+          cp target/*.jar package-work/input/appv2.jar
 
-      
+      # 3. Build for Windows (MSI)
+      - name: Package for Windows
+        if: matrix.os == 'windows-latest'
+        run: |
+          jpackage --type msi --name "TDS Manager" --input package-work/input --main-jar appv2.jar --main-class org.springframework.boot.loader.launch.JarLauncher --dest package-work/output --win-dir-chooser --win-shortcut --win-menu --win-console --vendor "Neraz Oli" --runtime-image "$JAVA_HOME" --icon "src/main/resources/static/tdsLogo.ico"
 
-      # 4. Build for macOS (DMG)
+      # 4. Build for macOS (PKG) with correct Ad-Hoc signing
       - name: Package for macOS
         if: matrix.os == 'macos-latest'
+        shell: bash
         run: |
-          jpackage --name "TDS-Manager" \
-                   --vendor "Neraz-Oli" \
+          # 1. Build raw app-image bundle first
+          jpackage --type app-image \
+                   --name "TDS Manager" \
+                   --vendor "Neraz Oli" \
                    --input package-work/input \
-                   --main-jar appv1.jar \
+                   --main-jar appv2.jar \
                    --main-class org.springframework.boot.loader.launch.JarLauncher \
-                   --type dmg \
-                   --dest package-work/output \
-                   --mac-package-identifier com.tds.manager \
+                   --dest package-work/mac-image \
+                   --runtime-image "$JAVA_HOME" \
                    --icon src/main/resources/static/tdsLogo.icns
 
+          # 2. Apply ad-hoc signature directly to the app bundle bundle 
+          echo "Applying ad-hoc signature..."
+          codesign --force --deep --sign - "package-work/mac-image/TDS Manager.app"
+          
+          # 3. Wrap the signed app bundle into the final installer package
+          jpackage --type pkg \
+                   --name "TDS Manager" \
+                   --vendor "Neraz Oli" \
+                   --app-image "package-work/mac-image/TDS Manager.app" \
+                   --dest package-work/output \
+                   --icon src/main/resources/static/tdsLogo.icns
+          
       # 5. Upload the resulting installer so you can download it
       - name: Upload Installer
         uses: actions/upload-artifact@v4
         with:
           name: TDS-Manager-${{ matrix.os }}
-          path: package-work/output/*
+          path: package-work/output/
