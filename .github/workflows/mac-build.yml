@@ -2,7 +2,7 @@ name: Build TDS Manager
 
 on:
   push:
-    branches: [ v3, macos ] # Add your target branches here
+    branches: [ v3] # Add your target branches here
 
 jobs:
   build-and-package:
