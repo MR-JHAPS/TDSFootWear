@@ -2,7 +2,7 @@ name: Build TDS Manager
 
 on:
   push:
-    branches: [ v3] # Add your target branches here
+    branches: [ v3 ]
 
 jobs:
   build-and-package:
@@ -25,21 +25,21 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
-      # 1. Build the fresh JAR from source
+      # 1. Force a clean Maven build from scratch
       - name: Build with Maven
         run: mvn clean package -DskipTests
 
-      # 2. Clean up and prepare your custom project structure safely
+      # 2. Clean up and prepare packaging directories
       - name: Setup Packaging Directories
         shell: bash
         run: |
-          rm -rf package-work/input package-work/output package-work/mac-image
-          mkdir -p package-work/input package-work/output
+          rm -rf package-work
+          mkdir -p package-work/input package-work/output package-work/mac-image
           
           # Remove Maven's .original thin JARs so cp target/*.jar only picks up the full Spring Boot fat JAR
           rm -f target/*.original
           
-          # Copy the newly built Spring Boot fat JAR as appv2.jar
+          # Copy the freshly built Spring Boot fat JAR as appv2.jar
           cp target/*.jar package-work/input/appv2.jar
 
       # 3. Build for Windows (MSI)
@@ -49,6 +49,7 @@ jobs:
         run: |
           jpackage --type msi \
                    --name "TDS Manager" \
+                   --app-version "3.0.0" \
                    --input package-work/input \
                    --main-jar appv2.jar \
                    --main-class org.springframework.boot.loader.launch.JarLauncher \
@@ -69,6 +70,7 @@ jobs:
           # 1. Build raw app-image bundle first
           jpackage --type app-image \
                    --name "TDS Manager" \
+                   --app-version "3.0.0" \
                    --vendor "Neraz Oli" \
                    --input package-work/input \
                    --main-jar appv2.jar \
@@ -84,6 +86,7 @@ jobs:
           # 3. Wrap the signed app bundle into the final installer package
           jpackage --type pkg \
                    --name "TDS Manager" \
+                   --app-version "3.0.0" \
                    --vendor "Neraz Oli" \
                    --app-image "package-work/mac-image/TDS Manager.app" \
                    --dest package-work/output \
