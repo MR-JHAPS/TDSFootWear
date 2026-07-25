@@ -95,27 +95,8 @@
 	<finalName>TDS-ClientManager</finalName>
 		<plugins>
 		
-			<!-- 1. Wipes old static assets on 'mvn clean' -->
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-clean-plugin</artifactId>
-            <version>3.3.2</version>
-            <configuration>
-                <filesets>
-                    <fileset>
-                        <directory>src/main/resources/static</directory>
-                        <includes>
-                            <include>**/*</include>
-                        </includes>
-                        <!-- Keep your desktop icon from being deleted -->
-                        <excludes>
-                            <exclude>tdsLogo.ico</exclude>
-                            <exclude>tdsLogo.icns</exclude>
-                        </excludes>
-                    </fileset>
-                </filesets>
-            </configuration>
-    		</plugin>	
+			
+        	
 		
 			<plugin>
 			  <groupId>org.springframework.boot</groupId>
