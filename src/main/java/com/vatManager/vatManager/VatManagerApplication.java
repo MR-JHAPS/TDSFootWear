@@ -47,7 +47,7 @@ public class VatManagerApplication {
     public void openBrowserAfterStartup() {
         // ApplicationReadyEvent fires ONLY when the server is fully initialized,
         // so you don't even need Thread.sleep(4000)!
-        openBrowser("http://localhost:8080");
+        openBrowser("http://localhost:8080/homepage");
     }
 
     private static void openBrowser(String url) {
